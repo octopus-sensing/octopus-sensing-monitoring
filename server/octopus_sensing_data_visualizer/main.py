@@ -35,6 +35,8 @@ def main():
 
     cherrypy.tree.mount(handler, '/api')
 
+    cherrypy.server.socket_host = '0.0.0.0'
+    cherrypy.engine.autoreload.on = False
     cherrypy.engine.start()
     cherrypy.engine.block()
 
