@@ -4,6 +4,7 @@ import styled from 'styled-components'
 
 import { ServerData } from './types'
 import { fetchServerData } from './services'
+import LineChart from './linechart'
 
 const AppContainer = styled.div`
     padding-top: 1em;
@@ -13,7 +14,7 @@ function App() {
     const [serverData, setServerData]: [ServerData, (arg0: ServerData) => void] = useState({})
 
     useEffect(() => {
-        const interval = setInterval(refreshData, 500)
+        const interval = setInterval(refreshData, 1000)
         return () => clearInterval(interval)
     }, []) // Runs only on mount
 
@@ -29,7 +30,9 @@ function App() {
 
     return (
         <AppContainer>
-            <p>{serverData.eeg ? serverData.eeg : "connecting..."}</p>
+            {serverData.eeg ?
+                serverData.eeg.map((data, i) => <LineChart key={i} name={'channel ' + i} series={data} />)
+                : <p>No data...</p>}
         </AppContainer>
     );
 }
