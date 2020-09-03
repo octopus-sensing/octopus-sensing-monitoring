@@ -7,6 +7,7 @@ import { fetchServerData } from './services'
 import LineChart from './linechart'
 
 const AppContainer = styled.div`
+    display: flex;
     padding-top: 1em;
 `
 

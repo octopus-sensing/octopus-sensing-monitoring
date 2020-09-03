@@ -1,5 +1,10 @@
-import React from 'react'
-import ReactApexChart from 'react-apexcharts'
+import React, { useRef, useEffect, useState } from 'react'
+import Chart from 'chart.js'
+import styled from 'styled-components'
+
+const StyledCanvasContainer = styled.div`
+  height: 5vh;
+`
 
 type Props = {
     name: string
@@ -7,29 +12,43 @@ type Props = {
 }
 
 function LineChart({ name, series }: Props) {
+    const [chartRef, setChartRef] = useState<Chart | null>(null)
+    const canvasRef = useRef<HTMLCanvasElement>(null)
 
-    const chartSeries = [{
-        name: name,
-        data: series,
-    }]
+    // TODO: useLayoutEffect instead of useEffect?
+    useEffect(() => {
+        if (!canvasRef.current) {
+            return
+        }
+        const ctx = canvasRef.current.getContext("2d")
 
-    const options = {
-        chart: {
-            height: 100,
+        if (chartRef) {
+            chartRef.destroy()
+        }
+
+        console.log('series:')
+        console.log(series)
+
+        setChartRef(new Chart(ctx!, {
             type: 'line',
-            animations: { enabled: false },
-            toolbar: { show: false },
-            zoom: { enabled: false },
-            tooltip: { enabled: false },
-        },
-        stroke: {
-            width: 3,
-            curve: 'smooth',
-        },
-    }
+            options: {
+                responsive: true,
+            },
+            data: {
+                datasets: [
+                    {
+                        label: name,
+                        data: series,
+                    }
+                ]
+            }
+        }))
+    }, [name, series, chartRef])
 
     return (
-        <ReactApexChart series={chartSeries} options={options} type='line' height={200} />
+        <StyledCanvasContainer>
+            <canvas id={name + 'canvas'} ref={canvasRef} />
+        </StyledCanvasContainer>
     )
 }
 
