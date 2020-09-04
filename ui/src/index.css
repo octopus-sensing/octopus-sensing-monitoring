@@ -1,0 +1,10 @@
+#root {
+    display: flex;
+    flex-direction: column;
+}
+
+.chart-container {
+    height: 10vh;
+    width: 100vw;
+    position: relative;
+}
