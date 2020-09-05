@@ -22,6 +22,7 @@ function makeChart(id: string) {
             maintainAspectRatio: false,
             animation: { duration: 0 },
             tooltips: { enabled: false },
+            legend: { display: false },
         },
         data: {
             labels: [],
