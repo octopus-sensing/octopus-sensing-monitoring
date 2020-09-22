@@ -28,8 +28,12 @@ class ApiHandler:
         raw_data = pickle.loads(serialized_data)
         data = {}
 
-        if 'eeg' in raw_data:
+        if "eeg" in raw_data:
             data["eeg"] = self._restructure_eeg(raw_data["eeg"])
+        if "shimmer" in raw_data:
+            gsr_records, ppg_records, = self._restructure_shimmer(raw_data["shimmer"])
+            data["gsr"] = gsr_records
+            data["ppg"] = ppg_records
 
         return json.dumps(data)
 
@@ -49,6 +53,15 @@ class ApiHandler:
 
         return result
 
+    def _restructure_shimmer(self, data):
+        gsr_records = []
+        ppg_records = []
+
+        for record in data:
+            gsr_records.append(record[5])
+            ppg_records.append(record[6])
+
+        return (gsr_records, ppg_records)
 
 class FakeApiHandler:
 

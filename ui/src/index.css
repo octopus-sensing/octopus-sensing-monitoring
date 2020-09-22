@@ -1,10 +1,27 @@
-#root {
+#root-container {
+    display: flex;
+    flex-direction: row;
+}
+
+#eeg-container {
     display: flex;
     flex-direction: column;
 }
 
-.chart-container {
+#others-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.eeg-chart {
     height: 10vh;
-    width: 100vw;
+    width: 80vw;
+    position: relative;
+}
+
+.gsr-chart,
+.ppg-chart {
+    height: 15vh;
+    width: 20vw;
     position: relative;
 }

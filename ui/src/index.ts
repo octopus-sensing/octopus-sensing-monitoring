@@ -1,17 +1,17 @@
 import Chart from 'chart.js'
 
 import { fetchServerData } from './services'
-import type { ServerData } from './types'
+import type { ServerData, Charts } from './types'
 
-function makeCanvas(id: string) {
+function makeCanvas(id: string, htmlClass: string): string {
     return `
 <div class="chart-container">
-  <canvas id="${id}" />
+  <canvas id="${id}" class="${htmlClass}" />
 </div>
 `
 }
 
-function makeChart(id: string) {
+function makeChart(id: string): Chart {
     const canvas = document.getElementById(id) as HTMLCanvasElement
     const ctx = canvas.getContext('2d')
 
@@ -41,19 +41,27 @@ function makeChart(id: string) {
     })
 }
 
-function refreshData(charts: Chart[]) {
+function refreshData(charts: Charts) {
+    // TODO: Draw messages in place of the chart when no data was available.
     fetchServerData()
         .then((data: ServerData) => {
             if (data.eeg) {
-                charts.forEach((chart: Chart, idx: number) => {
+                charts.eeg.forEach((chart: Chart, idx: number) => {
                     if (data.eeg!.length > idx) {
                         updateChart(chart, data.eeg![idx])
                     } else {
                         console.error(
-                            `Not enough data! charts: ${charts.length} data: ${data.eeg!.length}`,
+                            `Not enough data! charts: ${charts.eeg.length} data: ${data.eeg!.length
+                            }`,
                         )
                     }
                 })
+            }
+            if (data.gsr) {
+                updateChart(charts.gsr, data.gsr)
+            }
+            if (data.ppg) {
+                updateChart(charts.ppg, data.ppg)
             }
         })
         .catch((error) => {
@@ -76,19 +84,39 @@ function updateChart(chart: Chart, data: number[]) {
 }
 
 function main() {
-    let pageHtml = ''
+    let pageHtml = '<div id="root-container">'
+    pageHtml += '<div id="eeg-container">'
+
     // TODO: Fix hard-coded 16, and add other charts
     for (let idx = 0; idx < 16; idx++) {
-        const id = 'channel-' + idx
-        pageHtml += makeCanvas(id)
+        const id = 'eeg-' + idx
+        pageHtml += makeCanvas(id, 'eeg-chart')
     }
+
+    pageHtml += '</div>'
+
+    pageHtml += '<div id="others-container">'
+    pageHtml += makeCanvas('gsr', 'gsr-chart')
+    pageHtml += makeCanvas('ppg', 'ppg-chart')
+    pageHtml += '</div>'
+
+    pageHtml += '</div>'
 
     document.getElementById('root')!.innerHTML = pageHtml
 
-    let charts = Array(16)
+    let eeg_charts = Array(16)
     for (let idx = 0; idx < 16; idx++) {
-        const id = 'channel-' + idx
-        charts[idx] = makeChart(id)
+        const id = 'eeg-' + idx
+        eeg_charts[idx] = makeChart(id)
+    }
+
+    const gsr_chart = makeChart('gsr')
+    const ppg_chart = makeChart('ppg')
+
+    const charts: Charts = {
+        eeg: eeg_charts,
+        gsr: gsr_chart,
+        ppg: ppg_chart,
     }
 
     setInterval(refreshData, 1000, charts)
