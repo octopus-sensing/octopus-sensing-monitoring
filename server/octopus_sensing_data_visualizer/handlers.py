@@ -34,14 +34,17 @@ class ApiHandler:
         return json.dumps(data)
 
     def _restructure_eeg(self, data):
-        channels = len(data[0])
+        channels = 8
+        if len(data[0]) >= 16:
+            channels = 16
+
         result = []
 
         for _ in range(channels):
             result.append([])
 
         for record in data:
-            for i, channel_data in enumerate(record):
+            for i, channel_data in enumerate(record[:channels]):
                 result[i].append(channel_data)
 
         return result
