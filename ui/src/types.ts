@@ -2,9 +2,9 @@ import Chart from 'chart.js'
 
 export type ServerData = {
     eeg?: number[][]
-    gsr?: any
-    ppg?: any
-    camera?: any
+    gsr?: number[]
+    ppg?: number[]
+    webcam?: string
 }
 
 export type Charts = {

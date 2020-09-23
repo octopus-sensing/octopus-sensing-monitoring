@@ -41,6 +41,11 @@ function makeChart(id: string): Chart {
     })
 }
 
+async function base64ToBlob(b64: string): Promise<Blob> {
+    const url = `data:image/png;base64,${b64}`
+    return await (await fetch(url)).blob()
+}
+
 function refreshData(charts: Charts) {
     // TODO: Draw messages in place of the chart when no data was available.
     fetchServerData()
@@ -62,6 +67,13 @@ function refreshData(charts: Charts) {
             }
             if (data.ppg) {
                 updateChart(charts.ppg, data.ppg)
+            }
+            if (data.webcam) {
+                const imageTag = document.getElementById('webcam-image')! as HTMLImageElement
+                if (imageTag.src != '') {
+                    URL.revokeObjectURL(imageTag.src)
+                }
+                base64ToBlob(data.webcam).then((blob) => (imageTag.src = URL.createObjectURL(blob)))
             }
         })
         .catch((error) => {
@@ -98,6 +110,7 @@ function main() {
     pageHtml += '<div id="others-container">'
     pageHtml += makeCanvas('gsr', 'gsr-chart')
     pageHtml += makeCanvas('ppg', 'ppg-chart')
+    pageHtml += '<img id="webcam-image" src=""></img>'
     pageHtml += '</div>'
 
     pageHtml += '</div>'
