@@ -11,7 +11,7 @@ function makeCanvas(id: string, htmlClass: string): string {
 `
 }
 
-function makeChart(id: string): Chart {
+function makeChart(id: string, color: string): Chart {
     const canvas = document.getElementById(id) as HTMLCanvasElement
     const ctx = canvas.getContext('2d')
 
@@ -33,8 +33,7 @@ function makeChart(id: string): Chart {
                     fill: false,
                     // No curves in the line
                     lineTension: 0,
-                    // TODO: Use different colors for different charts (or different channels?)
-                    borderColor: '#44a3d7',
+                    borderColor: color,
                 },
             ],
         },
@@ -86,7 +85,7 @@ function updateChart(chart: Chart, data: number[]) {
     chart.data.datasets![0].data = data
 
     let labels = Array(data.length)
-    for (let idx = 1; idx <= data.length; idx++) {
+    for (let idx = 0; idx < data.length; idx++) {
         labels[idx] = idx
     }
     chart.data.labels = labels
@@ -98,6 +97,7 @@ function updateChart(chart: Chart, data: number[]) {
 function main() {
     let pageHtml = '<div id="root-container">'
     pageHtml += '<div id="eeg-container">'
+    pageHtml += '<div class="title">EEG</div>'
 
     // TODO: Fix hard-coded 16, and add other charts
     for (let idx = 0; idx < 16; idx++) {
@@ -108,9 +108,16 @@ function main() {
     pageHtml += '</div>'
 
     pageHtml += '<div id="others-container">'
+
+    pageHtml += '<div class="title">GSR</div>'
     pageHtml += makeCanvas('gsr', 'gsr-chart')
+
+    pageHtml += '<div class="title">PPG</div>'
     pageHtml += makeCanvas('ppg', 'ppg-chart')
+
+    pageHtml += '<div class="title">Camera</div>'
     pageHtml += '<img id="webcam-image" src=""></img>'
+
     pageHtml += '</div>'
 
     pageHtml += '</div>'
@@ -120,11 +127,11 @@ function main() {
     let eeg_charts = Array(16)
     for (let idx = 0; idx < 16; idx++) {
         const id = 'eeg-' + idx
-        eeg_charts[idx] = makeChart(id)
+        eeg_charts[idx] = makeChart(id, '#44a3d7')
     }
 
-    const gsr_chart = makeChart('gsr')
-    const ppg_chart = makeChart('ppg')
+    const gsr_chart = makeChart('gsr', '#44d7a3')
+    const ppg_chart = makeChart('ppg', '#d74493')
 
     const charts: Charts = {
         eeg: eeg_charts,

@@ -25,3 +25,8 @@
     width: 20vw;
     position: relative;
 }
+
+.title {
+    font: bold 1.2em;
+    margin: 0.3em;
+}
