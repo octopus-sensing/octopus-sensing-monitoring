@@ -45,40 +45,43 @@ async function base64ToBlob(b64: string): Promise<Blob> {
     return await (await fetch(url)).blob()
 }
 
-function refreshData(charts: Charts) {
+async function refreshData(charts: Charts) {
     // TODO: Draw messages in place of the chart when no data was available.
-    fetchServerData()
-        .then((data: ServerData) => {
-            if (data.eeg) {
-                charts.eeg.forEach((chart: Chart, idx: number) => {
-                    if (data.eeg!.length > idx) {
-                        updateChart(chart, data.eeg![idx])
-                    } else {
-                        console.error(
-                            `Not enough data! charts: ${charts.eeg.length} data: ${data.eeg!.length
-                            }`,
-                        )
-                    }
-                })
-            }
-            if (data.gsr) {
-                updateChart(charts.gsr, data.gsr)
-            }
-            if (data.ppg) {
-                updateChart(charts.ppg, data.ppg)
-            }
-            if (data.webcam) {
-                const imageTag = document.getElementById('webcam-image')! as HTMLImageElement
-                if (imageTag.src != '') {
-                    URL.revokeObjectURL(imageTag.src)
+
+    try {
+        const data = await fetchServerData()
+
+        if (data.eeg) {
+            charts.eeg.forEach((chart: Chart, idx: number) => {
+                if (data.eeg!.length > idx) {
+                    updateChart(chart, data.eeg![idx])
+                } else {
+                    console.error(
+                        `Not enough data! charts: ${charts.eeg.length} data: ${data.eeg!.length}`,
+                    )
                 }
-                base64ToBlob(data.webcam).then((blob) => (imageTag.src = URL.createObjectURL(blob)))
+            })
+        }
+
+        if (data.gsr) {
+            updateChart(charts.gsr, data.gsr)
+        }
+
+        if (data.ppg) {
+            updateChart(charts.ppg, data.ppg)
+        }
+
+        if (data.webcam) {
+            const imageTag = document.getElementById('webcam-image')! as HTMLImageElement
+            if (imageTag.src != '') {
+                URL.revokeObjectURL(imageTag.src)
             }
-        })
-        .catch((error) => {
-            // TODO: Show a notification or something
-            console.error(error)
-        })
+            base64ToBlob(data.webcam).then((blob) => (imageTag.src = URL.createObjectURL(blob)))
+        }
+    } catch (error) {
+        // TODO: Show a notification or something
+        console.error(error)
+    }
 }
 
 function updateChart(chart: Chart, data: number[]) {
