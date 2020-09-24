@@ -4,8 +4,8 @@
   "description": "",
   "private": true,
   "scripts": {
-    "build": "webpack --mode=development && cp src/index.html src/index.css ../server/octopus_sensing_data_visualizer/ui_build",
-    "build-prod": "webpack --mode=production"
+    "build": "webpack --config webpack.dev.js && cp src/index.html src/index.css ../server/octopus_sensing_data_visualizer/ui_build",
+    "build-prod": "webpack --config webpack.prod.js && cp src/index.html src/index.css ../server/octopus_sensing_data_visualizer/ui_build"
   },
   "author": "Aidin Gharibnavaz",
   "license": "GPL-3.0-or-later",
@@ -22,6 +22,7 @@
     "ts-loader": "^8.0.3",
     "typescript": "^4.0.2",
     "webpack": "^4.44.1",
-    "webpack-cli": "^3.3.12"
+    "webpack-cli": "^3.3.12",
+    "webpack-merge": "^5.1.4"
   }
 }
