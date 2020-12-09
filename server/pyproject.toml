@@ -1,13 +1,13 @@
 [tool.poetry]
-name = "octopus-sensing-data-visualizer"
+name = "octopus-sensing-monitoring"
 version = "1.0.0"
-description = "Web base data visualizer for https://octopus-sensing.nastaran-saffar.me"
+description = "Web base data monitoring/visualizer for https://octopus-sensing.nastaran-saffar.me"
 authors = ["Aidin Gharibnavaz <aidin@aidinhut.com>"]
 license = "GPL-3.0-or-later"
 readme = "README.md"
-repository = "https://github.com/aidin36/octopus-sensing-data-visualizer"
+repository = "https://github.com/aidin36/octopus-sensing-monitoring"
 
-include = ["octopus_sensing_data_visualizer/ui_build/*"]
+include = ["octopus_sensing_monitoring/ui_build/*"]
 
 [tool.poetry.dependencies]
 python = ">=3.7,<4.0"
@@ -18,8 +18,12 @@ Pillow = "^7.2.0"
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
 
+[tool.poetry.scripts]
+octopus-sensing-monitoring = "octopus_sensing_monitoring.main:main"
+
 [tool.autopep8]
 max_line_length = 100
+
 [build-system]
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"

@@ -1,11 +1,11 @@
 {
-  "name": "octopus-sensing-data-visualizer",
+  "name": "octopus-sensing-monitoring",
   "version": "1.0.0",
   "description": "",
   "private": true,
   "scripts": {
-    "build": "webpack --config webpack.dev.js && cp src/index.html src/index.css ../server/octopus_sensing_data_visualizer/ui_build",
-    "build-prod": "webpack --config webpack.prod.js && cp src/index.html src/index.css ../server/octopus_sensing_data_visualizer/ui_build"
+    "build": "webpack --config webpack.dev.js && cp src/index.html src/index.css ../server/octopus_sensing_monitoring/ui_build",
+    "build-prod": "webpack --config webpack.prod.js && cp src/index.html src/index.css ../server/octopus_sensing_monitoring/ui_build"
   },
   "author": "Aidin Gharibnavaz",
   "license": "GPL-3.0-or-later",

@@ -8,7 +8,7 @@
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
     "sourceMap": true,
-    "outDir": "../server/octopus_sensing_data_visualizer/ui_build",
+    "outDir": "../server/octopus_sensing_monitoring/ui_build",
   },
   "include": ["src/*"],
 }

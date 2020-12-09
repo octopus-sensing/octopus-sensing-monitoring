@@ -4,7 +4,7 @@ import argparse
 
 import cherrypy
 
-from handlers import *
+from octopus_sensing_monitoring.handlers import *
 
 
 def get_args():

@@ -16,6 +16,6 @@ module.exports = {
   },
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, '../server/octopus_sensing_data_visualizer/ui_build'),
+    path: path.resolve(__dirname, '../server/octopus_sensing_monitoring/ui_build'),
   },
 };
