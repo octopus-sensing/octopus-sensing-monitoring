@@ -16,7 +16,7 @@
 import Chart from 'chart.js'
 
 import { fetchServerData } from './services'
-import type { ServerData, Charts } from './types'
+import type { Charts } from './types'
 
 function makeCanvas(id: string, htmlClass: string): string {
     return `
@@ -30,7 +30,11 @@ function makeChart(id: string, color: string): Chart {
     const canvas = document.getElementById(id) as HTMLCanvasElement
     const ctx = canvas.getContext('2d')
 
-    return new Chart(ctx!, {
+    if (!ctx) {
+        throw new Error('Context of the Canvas is null!')
+    }
+
+    return new Chart(ctx, {
         type: 'line',
         options: {
             responsive: true,
@@ -67,12 +71,13 @@ async function refreshData(charts: Charts) {
         const data = await fetchServerData()
 
         if (data.eeg) {
+            const eegData = data.eeg
             charts.eeg.forEach((chart: Chart, idx: number) => {
-                if (data.eeg!.length > idx) {
-                    updateChart(chart, data.eeg![idx])
+                if (eegData.length > idx) {
+                    updateChart(chart, eegData[idx])
                 } else {
                     console.error(
-                        `Not enough data! charts: ${charts.eeg.length} data: ${data.eeg!.length}`,
+                        `Not enough data! charts: ${charts.eeg.length} data: ${eegData.length}`,
                     )
                 }
             })
@@ -87,7 +92,7 @@ async function refreshData(charts: Charts) {
         }
 
         if (data.webcam) {
-            const imageTag = document.getElementById('webcam-image')! as HTMLImageElement
+            const imageTag = document.getElementById('webcam-image') as HTMLImageElement
             if (imageTag.src != '') {
                 URL.revokeObjectURL(imageTag.src)
             }
@@ -100,9 +105,13 @@ async function refreshData(charts: Charts) {
 }
 
 function updateChart(chart: Chart, data: number[]) {
-    chart.data.datasets![0].data = data
+    if (!chart.data.datasets) {
+        throw new Error("in updateChart: 'chart.data.datasets' is undefined! Should never happen!")
+    }
 
-    let labels = Array(data.length)
+    chart.data.datasets[0].data = data
+
+    const labels = Array(data.length)
     for (let idx = 0; idx < data.length; idx++) {
         labels[idx] = idx
     }
@@ -140,9 +149,13 @@ function main() {
 
     pageHtml += '</div>'
 
-    document.getElementById('root')!.innerHTML = pageHtml
+    const rootElement = document.getElementById('root')
+    if (!rootElement) {
+        throw new Error('Root element is null!')
+    }
+    rootElement.innerHTML = pageHtml
 
-    let eeg_charts = Array(16)
+    const eeg_charts = Array(16)
     for (let idx = 0; idx < 16; idx++) {
         const id = 'eeg-' + idx
         eeg_charts[idx] = makeChart(id, '#44a3d7')
