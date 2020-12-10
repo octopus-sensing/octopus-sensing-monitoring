@@ -10,6 +10,7 @@
   "author": "Aidin Gharibnavaz",
   "license": "GPL-3.0-or-later",
   "dependencies": {
+    "//": "TODO: After upgrading to Chart.js 3, make it tree-shakeable: https://www.chartjs.org/docs/master/getting-started/integration/",
     "chart.js": "^2.9.4"
   },
   "devDependencies": {
@@ -23,6 +24,6 @@
     "typescript": "^4.1.2",
     "webpack": "^5.10.0",
     "webpack-cli": "^4.2.0",
-    "webpack-merge": "^5.4.1"
+    "webpack-merge": "^5.5.0"
   }
 }
