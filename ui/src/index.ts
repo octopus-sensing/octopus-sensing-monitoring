@@ -13,7 +13,10 @@
  * Monitoring. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import Chart from 'chart.js/auto'
+import { Chart, LineController, LinearScale, Title } from 'chart.js'
+
+// To make Charts tree-shakeable, we need to register the components we're using.
+Chart.register(LineController, LinearScale, Title)
 
 import { fetchServerData } from './services'
 import type { Charts } from './types'
