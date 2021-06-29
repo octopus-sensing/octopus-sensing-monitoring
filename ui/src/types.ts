@@ -13,7 +13,7 @@
  * Monitoring. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import Chart from 'chart.js'
+import Chart from 'chart.js/auto'
 
 export type ServerData = {
     eeg?: number[][]

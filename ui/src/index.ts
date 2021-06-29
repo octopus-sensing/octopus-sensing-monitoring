@@ -13,7 +13,7 @@
  * Monitoring. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import Chart from 'chart.js'
+import Chart from 'chart.js/auto'
 
 import { fetchServerData } from './services'
 import type { Charts } from './types'
@@ -39,9 +39,11 @@ function makeChart(id: string, color: string): Chart {
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            animation: { duration: 0 },
-            tooltips: { enabled: false },
-            legend: { display: false },
+            animation: false,
+            plugins: {
+                tooltip: { enabled: false },
+                legend: { display: false },
+            },
         },
         data: {
             labels: [],
@@ -50,8 +52,6 @@ function makeChart(id: string, color: string): Chart {
                     label: id,
                     data: [],
                     fill: false,
-                    // No curves in the line
-                    lineTension: 0,
                     borderColor: color,
                 },
             ],
@@ -117,8 +117,8 @@ function updateChart(chart: Chart, data: number[]) {
     }
     chart.data.labels = labels
 
-    // Disabling update animation
-    chart.update({ duration: 0 })
+    // 'none': disables update animation
+    chart.update('none')
 }
 
 function main() {
