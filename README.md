@@ -1,7 +1,7 @@
 Octopus Sensing Monitoring
 ==========================
 
-A web-based real-time monitoring for [Octopus Sensing](octopus-sensing.nastaran-saffar.me/). You can
+A web-based real-time monitoring for [Octopus Sensing](https://octopus-sensing.nastaran-saffar.me/). You can
 monitor your data from any machine in the same network.
 
 Installation
@@ -19,7 +19,7 @@ pip install octopus-sensing-monitoring
 Then simply run it by invoking `octopus-sensing-monitoring` from the command line.
 
 You can also use one of the Python package managers like [pipenv](https://pipenv.pypa.io/en/latest/)
-or [poetry](python-poetry.org/) to prevent package conflict.
+or [poetry](https://python-poetry.org/) to prevent package conflict.
 
 ```
 pipenv install octopus-sensing-monitoring
