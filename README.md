@@ -47,7 +47,7 @@ In `Octopus Sensing`, when you're creating instance of devices, you need to prov
 moment, device names are hard coded in this monitoring app. So you need to use these names for your
 devices in order for them to appear on the web page.
 
-* For OpenBCIStreaming use `eeg` (i.e. `OpenBCIStreaming(name-"eeg", ...)` )
+* For OpenBCIStreaming use `eeg` (i.e. `OpenBCIStreaming(name="eeg", ...)` )
 * For Shimmer3Streaming use `shimmer`
 * For the webcam, you need to create instance of `MonitoredWebcam` and name it `webcam`
 
