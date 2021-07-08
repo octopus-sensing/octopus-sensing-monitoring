@@ -13,10 +13,10 @@
  * Monitoring. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { Chart, LineController, LinearScale, Title } from 'chart.js'
+import { Chart, LineController, LinearScale, Title, CategoryScale, PointElement, LineElement  } from 'chart.js'
 
 // To make Charts tree-shakeable, we need to register the components we're using.
-Chart.register(LineController, LinearScale, Title)
+Chart.register(LineController, LinearScale, Title, CategoryScale, PointElement, LineElement)
 
 import { fetchServerData } from './services'
 import type { Charts } from './types'
@@ -72,6 +72,7 @@ async function refreshData(charts: Charts) {
 
     try {
         const data = await fetchServerData()
+        console.log(data)
 
         if (data.eeg) {
             const eegData = data.eeg
