@@ -5,7 +5,7 @@ description = "Web base data monitoring/visualizer for https://octopus-sensing.n
 authors = ["Aidin Gharibnavaz <aidin@aidinhut.com>"]
 license = "GPL-3.0-or-later"
 readme = "README.md"
-repository = "https://github.com/aidin36/octopus-sensing-monitoring"
+repository = "https://github.com/octopus-sensing/octopus-sensing-monitoring"
 
 include = ["octopus_sensing_monitoring/ui_build/*"]
 
