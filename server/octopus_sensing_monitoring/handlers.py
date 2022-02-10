@@ -76,7 +76,7 @@ class ApiHandler:
             result.append([])
 
         for record in data:
-            for i, channel_data in enumerate(record[:channels]):
+            for i, channel_data in enumerate(record[1:channels+1]):
                 result[i].append(channel_data)
 
         return result

@@ -1,10 +1,10 @@
 Octopus Sensing Monitoring
 ==========================
 
-A web-based real-time monitoring for `Octopus Sensing <https://octopus-sensing.nastaran-saffar.me/>`_. You can
+A web-based real-time monitoring for [Octopus Sensing](https://octopus-sensing.nastaran-saffar.me/). You can
 monitor your data from any machine in the same network.
 
-`Octopus Sensing monitoring <https://github.com/octopus-sensing/octopus-sensing-monitoring>`_ is 
+[Octopus Sensing monitoring](https://github.com/octopus-sensing/octopus-sensing-monitoring) is 
 a separated project and can be installed for Octopus Sensing if we need monitoring features.
 
 **To see the full documentation go to [Otopus Sensing](https://octopus-sensing.nastaran-saffar.me/monitoring) website.**
