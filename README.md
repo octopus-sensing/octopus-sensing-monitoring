@@ -12,7 +12,7 @@ a separated project and can be installed for Octopus Sensing if we need monitori
 Copyright
 ---------
 
-Copyright © 2020,2021 [Aidin Gharibnavaz](https://aidinhut.com)
+Copyright © 2020,2022 [Aidin Gharibnavaz](https://aidinhut.com)
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU
 General Public License as published by the Free Software Foundation, either version 3 of the
