@@ -41,7 +41,7 @@ class ApiHandler:
     @cherrypy.expose
     def fetch(self):
         request = urllib.request.Request(
-            "http://127.0.0.1:9330", headers={"Accept": "application/pickle"}, method='GET')
+            'http://127.0.0.1:9330/?device_list="eeg,shimmer"', headers={"Accept": "application/pickle"}, method='GET')
         with urllib.request.urlopen(request) as response:
             if response.getcode() != 200:
                 raise RuntimeError(
@@ -51,17 +51,33 @@ class ApiHandler:
         raw_data = pickle.loads(serialized_data)
         data = {}
 
-        if "eeg" in raw_data:
-            data["eeg"] = self._restructure_eeg(raw_data["eeg"])
+        for key, device_data in raw_data.items():
+            if device_data["metadata"]["type"] == "OpenBCIStreaming":
+                data.setdefault("eeg", {})
+                data["eeg"]["data"] = self._restructure_eeg(device_data["data"])
+                data["eeg"]["sampling_rate"] = device_data["metadata"]["sampling_rate"]
+                data["eeg"]["channels"] = device_data["metadata"]["channels"]
 
-        if "shimmer" in raw_data:
-            gsr_records, ppg_records, = self._restructure_shimmer(
-                raw_data["shimmer"])
-            data["gsr"] = gsr_records
-            data["ppg"] = ppg_records
+            if device_data["metadata"]["type"] == "BrainFlowOpenBCIStreaming":
+                data.setdefault("eeg", {})
+                data["eeg"]["data"] = self._restructure_eeg(device_data["data"])
+                data["eeg"]["sampling_rate"] = device_data["metadata"]["sampling_rate"]
+                data["eeg"]["channels"] = device_data["metadata"]["channels"]
 
-        if "webcam" in raw_data:
-            data["webcam"] = encode_image_to_base64(raw_data["webcam"])
+            if device_data["metadata"]["type"] == "Shimmer3Streaming":
+                data.setdefault("ppg", {})
+                data.setdefault("gsr", {})
+                gsr_records, ppg_records, = self._restructure_shimmer(device_data["data"])
+                data["gsr"]["data"] = gsr_records
+                data["ppg"]["data"] = ppg_records
+                data["gsr"]["sampling_rate"] = device_data["metadata"]["sampling_rate"]
+                data["ppg"]["sampling_rate"] = device_data["metadata"]["sampling_rate"]
+
+            if device_data["metadata"]["type"] == "CameraStreaming":
+                data.setdefault("camera", {})
+                # The type of data is a list of numpy-array. Each item is a frame
+                data["camera"]["data"] = encode_image_to_base64(device_data["data"])
+                data["camera"]["frame_rate"] = device_data["metadata"]["frame_rate"]
 
         return json.dumps(data)
 
