@@ -56,6 +56,7 @@ function makeChart(id: string, color: string): Chart {
                     data: [],
                     fill: false,
                     borderColor: color,
+                    pointStyle: false,
                 },
             ],
         },
@@ -72,8 +73,6 @@ async function refreshData(charts: Charts) {
 
     try {
         const data = await fetchServerData()
-        console.log(data)
-
         if (data.eeg) {
             const eegData = data.eeg
             charts.eeg.forEach((chart: Chart, idx: number) => {
