@@ -26,6 +26,9 @@ def get_args():
     arg_parser.add_argument("-f", "--fake",
                             help="start a fake server that generates random data",
                             action="store_true")
+    arg_parser.add_argument("-p", "--port",
+                            help="Server port for listening",
+                            default=8080)
     return arg_parser.parse_args()
 
 
@@ -49,7 +52,9 @@ def main():
 
     cherrypy.tree.mount(handler, '/api')
 
+    port = int(args.port)
     cherrypy.server.socket_host = '0.0.0.0'
+    cherrypy.server.socket_port = port
     cherrypy.engine.autoreload.on = False
     cherrypy.engine.start()
     cherrypy.engine.block()
