@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "octopus-sensing-monitoring"
-version = "1.2.1"
+version = "1.2.2"
 description = "Web base data monitoring/visualizer for https://octopus-sensing.nastaran-saffar.me"
 authors = ["Aidin Gharibnavaz <aidin@aidinhut.com>"]
 license = "GPL-3.0-or-later"
@@ -10,17 +10,17 @@ repository = "https://github.com/octopus-sensing/octopus-sensing-monitoring"
 include = ["octopus_sensing_monitoring/ui_build/*"]
 
 [tool.poetry.dependencies]
-python = ">=3.10,<4.0"
-numpy = "2.2.2"
-pandas = "2.2.3"
-neurokit2 = "0.2.10"
+python = ">=3.11,<4.0"
+numpy = "2.3.2"
+pandas = "2.3.2"
+neurokit2 = "0.2.12"
 heartpy = "1.2.7"
-pycairo = "1.27.0"
+pycairo = "1.28.0"
 CherryPy = "18.10.0"
-Pillow = "^8.2.0"
+Pillow = "11.3.0"
 
-[tool.poetry.dev-dependencies]
-pytest = "^5.2"
+[tool.poetry.group.test.dependencies]
+pytest = "8.4.1"
 
 [tool.poetry.scripts]
 octopus-sensing-monitoring = "octopus_sensing_monitoring.main:main"
