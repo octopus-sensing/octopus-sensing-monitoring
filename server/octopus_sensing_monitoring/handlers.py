@@ -1,5 +1,5 @@
 # This file is part of Octopus Sensing Monitoring <https://octopus-sensing.nastaran-saffar.me/>
-# Copyright © 2020, 2021 Aidin Gharibnavaz <aidin@aidinhut.com>
+# Copyright © 2020-2026 Aidin Gharibnavaz <aidin@aidinhut.com>
 #
 # Octopus Sensing Monitoring is free software: you can redistribute it and/or modify it under the
 # terms of the GNU General Public License as published by the Free Software Foundation, either
@@ -54,20 +54,23 @@ class ApiHandler:
         for key, device_data in raw_data.items():
             if device_data["metadata"]["type"] == "OpenBCIStreaming":
                 data.setdefault("eeg", {})
-                data["eeg"]["data"] = self._restructure_eeg(device_data["data"])
+                data["eeg"]["data"] = self._restructure_eeg(
+                    device_data["data"])
                 data["eeg"]["sampling_rate"] = device_data["metadata"]["sampling_rate"]
                 data["eeg"]["channels"] = device_data["metadata"]["channels"]
 
             if device_data["metadata"]["type"] == "BrainFlowOpenBCIStreaming":
                 data.setdefault("eeg", {})
-                data["eeg"]["data"] = self._restructure_eeg(device_data["data"])
+                data["eeg"]["data"] = self._restructure_eeg(
+                    device_data["data"])
                 data["eeg"]["sampling_rate"] = device_data["metadata"]["sampling_rate"]
                 data["eeg"]["channels"] = device_data["metadata"]["channels"]
 
             if device_data["metadata"]["type"] == "Shimmer3Streaming":
                 data.setdefault("ppg", {})
                 data.setdefault("gsr", {})
-                gsr_records, ppg_records, = self._restructure_shimmer(device_data["data"])
+                gsr_records, ppg_records, = self._restructure_shimmer(
+                    device_data["data"])
                 data["gsr"]["data"] = gsr_records
                 data["ppg"]["data"] = ppg_records
                 data["gsr"]["sampling_rate"] = device_data["metadata"]["sampling_rate"]
@@ -76,7 +79,8 @@ class ApiHandler:
             if device_data["metadata"]["type"] == "CameraStreaming":
                 data.setdefault("camera", {})
                 # The type of data is a list of numpy-array. Each item is a frame
-                data["camera"]["data"] = encode_image_to_base64(device_data["data"])
+                data["camera"]["data"] = encode_image_to_base64(
+                    device_data["data"])
                 data["camera"]["frame_rate"] = device_data["metadata"]["frame_rate"]
 
         return json.dumps(data)

@@ -26,7 +26,7 @@ You can run the server with fake data using `poetry run python main.py --fake`.
 
 ## Copyright
 
-Copyright © 2020-2025 [Aidin Gharibnavaz](https://aidinhut.com)
+Copyright © 2020-2026 [Aidin Gharibnavaz](https://aidinhut.com)
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU
 General Public License as published by the Free Software Foundation, either version 3 of the
